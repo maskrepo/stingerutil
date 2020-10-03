@@ -1,7 +1,7 @@
 package fr.convergence.proddoc.util.stinger
 
 import fr.convergence.proddoc.model.lib.obj.MaskMessage
-import fr.convergence.proddoc.model.metier.DemandeStockage
+import fr.convergence.proddoc.model.metier.DemandeStockageFichier
 import io.vertx.core.logging.Logger
 import io.vertx.core.logging.LoggerFactory
 import org.eclipse.microprofile.config.inject.ConfigProperty
@@ -30,7 +30,8 @@ open class StingerUtil(
         maskMessage: MaskMessage,
         callbackSuiteAuPOST: (MaskMessage) -> InputStream,
         callbackSuiteAMessageReponseDansKafka: (MaskMessage) -> Unit,
-        mediaType: String
+        mediaType: String,
+        referenceMetier: String
     ) {
 
         stingerCache.referencerLesMethodesDeCallbacks(
@@ -40,7 +41,7 @@ open class StingerUtil(
         )
 
         val urlCallback = "http://$host:$port/stinger"
-        val payload = DemandeStockage(urlCallback, mediaType, maskMessage)
+        val payload = DemandeStockageFichier(urlCallback, maskMessage, mediaType, referenceMetier)
         val question = MaskMessage.question(payload, maskMessage, maskMessage.entete.idReference)
         LOG.info("On poste la demande de stockage de fichier pour Stinger : $question")
 
