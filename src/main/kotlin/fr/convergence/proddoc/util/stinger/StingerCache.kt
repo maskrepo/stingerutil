@@ -8,7 +8,7 @@ import javax.enterprise.context.ApplicationScoped
  * Gère le cache des callbacks depuis Stinger
  */
 @ApplicationScoped
-class StingerCache {
+open class StingerCache {
 
     /**
      * Pour chaque clef il y a deux méthodes en cache :
@@ -18,7 +18,7 @@ class StingerCache {
     private var demandeMap: MutableMap<String, Pair<(MaskMessage) -> InputStream, (MaskMessage) -> Unit>> =
         mutableMapOf()
 
-    fun referencerLesMethodesDeCallbacks(
+    open fun referencerLesMethodesDeCallbacks(
         reference: String,
         callbackSuiteAuPOST: (MaskMessage) -> InputStream,
         callbackSuiteALaReponseDansKafka: (MaskMessage) -> Unit
@@ -26,7 +26,7 @@ class StingerCache {
         demandeMap.put(reference, Pair(callbackSuiteAuPOST, callbackSuiteALaReponseDansKafka))
     }
 
-    fun getCallbacks(maskMessage: MaskMessage): Pair<(MaskMessage) -> InputStream, (MaskMessage) -> Unit>? {
+    open fun getCallbacks(maskMessage: MaskMessage): Pair<(MaskMessage) -> InputStream, (MaskMessage) -> Unit>? {
         val idReference = maskMessage.entete.idReference
         return demandeMap.get(idReference)
     }
