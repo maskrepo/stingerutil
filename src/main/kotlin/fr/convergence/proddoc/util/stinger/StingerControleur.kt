@@ -34,8 +34,8 @@ open class StingerControleur(@Inject open val stingerCache: StingerCache) {
                 throw IllegalStateException("Impossible de retrouver cette référence : $maskMessage dans les callbacks de Stinger")
             }
 
-            val metthodeQuiVaGenererLeStreamSurLeFichier = callbacks.first
-            ok(metthodeQuiVaGenererLeStreamSurLeFichier(maskMessage))
+            val methodeQuiVaGenererLeStreamSurLeFichier = callbacks.first
+            ok(methodeQuiVaGenererLeStreamSurLeFichier(maskMessage))
 
         } catch (ex: Exception) {
             LOG.error("Erreur lors de l'appel (depuis Stinger) à la méthode qui doit générer le fichier à stocker", ex)
