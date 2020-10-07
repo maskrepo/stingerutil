@@ -2,11 +2,9 @@ package fr.convergence.proddoc.util.stinger
 
 import fr.convergence.proddoc.model.lib.obj.MaskMessage
 import fr.convergence.proddoc.model.metier.DemandeStockageFichier
-import io.vertx.core.logging.Logger
-import io.vertx.core.logging.LoggerFactory
+import fr.convergence.proddoc.util.MessageUtils
 import org.eclipse.microprofile.config.inject.ConfigProperty
-import org.eclipse.microprofile.reactive.messaging.Channel
-import org.eclipse.microprofile.reactive.messaging.Emitter
+import org.slf4j.LoggerFactory.getLogger
 import java.io.InputStream
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
@@ -15,16 +13,13 @@ import javax.inject.Inject
 open class StingerUtil(
     @ConfigProperty(name = "quarkus.http.host") open val host: String,
     @ConfigProperty(name = "quarkus.http.port") open val port: String,
-    @Inject open val stingerCache: StingerCache
+    @Inject open var stingerCache: StingerCache,
+    @Inject open var messageUtils: MessageUtils,
 ) {
 
     companion object {
-        private val LOG: Logger = LoggerFactory.getLogger(StingerUtil::class.java)
+        private val LOG = getLogger(StingerUtil::class.java)
     }
-
-    @Inject
-    @field: Channel("stocker_fichier_demande")
-    private var retourEmitter: Emitter<MaskMessage>? = null
 
     open fun stockerResultatSurStinger(
         maskMessage: MaskMessage,
@@ -45,7 +40,7 @@ open class StingerUtil(
         val question = MaskMessage.question(payload, maskMessage, maskMessage.entete.idReference)
         LOG.info("On poste la demande de stockage de fichier pour Stinger : $question")
 
-        retourEmitter!!.send(question)
+        messageUtils.getEmitter("stocker_fichier_demande").send(question)
     }
 
 }

@@ -1,9 +1,8 @@
 package fr.convergence.proddoc.util.stinger
 
 import fr.convergence.proddoc.model.lib.obj.MaskMessage
-import io.vertx.core.logging.Logger
-import io.vertx.core.logging.LoggerFactory
 import org.eclipse.microprofile.reactive.messaging.Incoming
+import org.slf4j.LoggerFactory.getLogger
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
 
@@ -11,7 +10,7 @@ import javax.inject.Inject
 open class StingerKafka(@Inject open val stingerCache: StingerCache) {
 
     companion object {
-        private val LOG: Logger = LoggerFactory.getLogger(StingerKafka::class.java)
+        private val LOG = getLogger(StingerKafka::class.java)
     }
 
     @Incoming("stocker_fichier_reponse")

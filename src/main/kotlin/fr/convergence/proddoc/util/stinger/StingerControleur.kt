@@ -1,8 +1,7 @@
 package fr.convergence.proddoc.util.stinger
 
 import fr.convergence.proddoc.model.lib.obj.MaskMessage
-import io.vertx.core.logging.Logger
-import io.vertx.core.logging.LoggerFactory
+import org.slf4j.LoggerFactory.getLogger
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
 import javax.ws.rs.Consumes
@@ -11,15 +10,16 @@ import javax.ws.rs.Path
 import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
-import javax.ws.rs.core.Response.*
 import javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR
+import javax.ws.rs.core.Response.ok
+import javax.ws.rs.core.Response.status
 
 @Path("/stinger")
 @ApplicationScoped
 open class StingerControleur(@Inject open val stingerCache: StingerCache) {
 
     companion object {
-        private val LOG: Logger = LoggerFactory.getLogger(StingerControleur::class.java)
+        private val LOG = getLogger(StingerControleur::class.java)
     }
 
     @POST
