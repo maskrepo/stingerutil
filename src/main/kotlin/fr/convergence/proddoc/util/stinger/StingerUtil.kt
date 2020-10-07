@@ -2,8 +2,9 @@ package fr.convergence.proddoc.util.stinger
 
 import fr.convergence.proddoc.model.lib.obj.MaskMessage
 import fr.convergence.proddoc.model.metier.DemandeStockageFichier
-import fr.convergence.proddoc.util.MessageUtils
 import org.eclipse.microprofile.config.inject.ConfigProperty
+import org.eclipse.microprofile.reactive.messaging.Channel
+import org.eclipse.microprofile.reactive.messaging.Emitter
 import org.slf4j.LoggerFactory.getLogger
 import java.io.InputStream
 import javax.enterprise.context.ApplicationScoped
@@ -13,9 +14,12 @@ import javax.inject.Inject
 open class StingerUtil(
     @ConfigProperty(name = "quarkus.http.host") open val host: String,
     @ConfigProperty(name = "quarkus.http.port") open val port: String,
-    @Inject open var stingerCache: StingerCache,
-    @Inject open var messageUtils: MessageUtils,
+    @Inject open var stingerCache: StingerCache
 ) {
+
+    @Inject
+    @Channel("stocker_fichier_demande")
+    var stockerFichierDemandeEmitter: Emitter<MaskMessage>? = null
 
     companion object {
         private val LOG = getLogger(StingerUtil::class.java)
@@ -40,7 +44,6 @@ open class StingerUtil(
         val question = MaskMessage.question(payload, maskMessage, maskMessage.entete.idReference)
         LOG.info("On poste la demande de stockage de fichier pour Stinger : $question")
 
-        messageUtils.getEmitter("stocker_fichier_demande").send(question)
+        stockerFichierDemandeEmitter!!.send(question)
     }
-
 }
