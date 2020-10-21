@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 @ApplicationScoped
 open class StingerUtil(
-    @ConfigProperty(name = "service.http.host") open val host: String,
-    @ConfigProperty(name = "service.http.port") open val port: String,
+    @ConfigProperty(name = "service.http.host") open var host: String,
+    @ConfigProperty(name = "service.http.port") open var port: String,
     @Inject open var stingerCache: StingerCache
 ) {
 
