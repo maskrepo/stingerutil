@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 @ApplicationScoped
 open class StingerUtil(
-    @ConfigProperty(name = "quarkus.http.host") open val host: String,
-    @ConfigProperty(name = "quarkus.http.port") open val port: String,
+    @ConfigProperty(name = "service.http.host") open val host: String,
+    @ConfigProperty(name = "service.http.port") open val port: String,
     @Inject open var stingerCache: StingerCache
 ) {
 
