@@ -1,6 +1,6 @@
 val quarkusVersion: String = "1.8.0.Final"
 val maskModelVersion: String = "1.1.4-SNAPSHOT"
-val maskUtilVersion: String = "1.1.3-SNAPSHOT"
+val maskUtilVersion: String = "1.1.4-SNAPSHOT"
 
 plugins {
     kotlin("jvm") version "1.4.10"
@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "fr.convergence.proddoc.lib"
-version = "1.1.3-SNAPSHOT"
+version = "1.1.4-SNAPSHOT"
 
 val myMavenRepoUser = "myMavenRepo"
 val myMavenRepoPassword ="mask"
